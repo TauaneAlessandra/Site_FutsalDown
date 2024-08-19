@@ -1,0 +1,745 @@
+/*=============== GOOGLE FONTS ===============*/
+@import url("https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600&display=swap");
+
+/*=============== VARIABLES CSS ===============*/
+:root {
+  --header-height: 3.5rem;
+
+  /*========== Colors ==========*/
+  /*Color mode HSL(hue, saturation, lightness)*/
+  --first-color: hsl(230, 75%, 56%);
+  --title-color: hsl(230, 75%, 15%);
+  --text-color: hsl(230, 12%, 40%);
+  --body-color: hsl(230, 100%, 98%);
+  --container-color: hsl(230, 100%, 97%);
+  --border-color: hsl(230, 25%, 80%);
+
+  /*========== Font and typography ==========*/
+  /*.5rem = 8px | 1rem = 16px ...*/
+  --body-font: "Syne", sans-serif;
+  --h2-font-size: 1.25rem;
+  --normal-font-size: .938rem;
+
+  /*========== Font weight ==========*/
+  --font-regular: 400;
+  --font-medium: 500;
+  --font-semi-bold: 600;
+
+  /*========== z index ==========*/
+  --z-fixed: 100;
+  --z-modal: 1000;
+}
+
+/*========== Responsive typography ==========*/
+@media screen and (min-width: 1023px) {
+  :root {
+    --h2-font-size: 1.5rem;
+    --normal-font-size: 1rem;
+  }
+}
+
+/*=============== BASE ===============*/
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body,
+input,
+button {
+  font-family: var(--body-font);
+  font-size: var(--normal-font-size);
+}
+
+body {
+  background-color: var(--body-color);
+  color: var(--text-color);
+}
+
+input,
+button {
+  border: none;
+  outline: none;
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/*=============== REUSABLE CSS CLASSES ===============*/
+.container {
+  max-width: 1120px;
+  margin-inline: 1.5rem;
+}
+
+.main {
+  position: relative;
+  height: 100vh;
+}
+
+.main__bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  z-index: -1;
+}
+
+.search {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: var(--z-modal);
+  background-color: hsla(230, 75%, 15%, .1);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px); /* For safari */
+  padding: 8rem 1.5rem 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .4s;
+}
+
+.search__close {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  font-size: 1.5rem;
+  color: var(--title-color);
+  cursor: pointer;
+}
+
+/*=============== HEADER & NAV ===============*/
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: var(--body-color);
+  box-shadow: 0 2px 16px hsla(230, 75%, 32%, .15);
+  z-index: var(--z-fixed);
+}
+
+.nav {
+  height: var(--header-height);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav__logo {
+  color: var(--title-color);
+  font-weight: var(--font-semi-bold);
+  transition: color .4s;
+}
+
+.nav__actions {
+  display: flex;
+  align-items: center;
+  column-gap: 1rem;
+}
+
+.nav__search, 
+.nav__login, 
+.nav__toggle, 
+.nav__close {
+  font-size: 1.25rem;
+  color: var(--title-color);
+  cursor: pointer;
+  transition: color .4s;
+}
+
+:is(.nav__logo, .nav__search, .nav__login, .nav__toggle, .nav__link):hover {
+  color: var(--first-color);
+}
+
+/* Navigation for mobile devices */
+@media screen and (max-width: 1023px) {
+  .nav__menu {
+    position: fixed;
+    top: -100%;
+    left: 0;
+    background-color: var(--body-color);
+    box-shadow: 0 8px 16px hsla(230, 75%, 32%, .15);
+    width: 100%;
+    padding-block: 4.5rem 4rem;
+    transition: top .4s;
+  }
+}
+
+.nav__list {
+  display: flex;
+  flex-direction: column;
+  row-gap: 2.5rem;
+  text-align: center;
+}
+
+.nav__link {
+  color: var(--title-color);
+  font-weight: var(--font-semi-bold);
+  transition: color .4s;
+}
+
+.nav__close {
+  position: absolute;
+  top: 1.15rem;
+  right: 1.5rem;
+}
+
+/* Show menu */
+.show-menu {
+  top: 0;
+}
+
+
+
+
+
+/*=============== SEARCH ===============*/
+.search__form {
+  display: flex;
+  align-items: center;
+  column-gap: .5rem;
+  background-color: var(--container-color);
+  box-shadow: 0 8px 32px hsla(230, 75%, 15%, .2);
+  padding-inline: 1rem;
+  border-radius: .5rem;
+  transform: translateY(-1rem);
+  transition: transform .4s;
+}
+
+.search__icon {
+  font-size: 1.25rem;
+  color: var(--title-color);
+}
+
+.search__input {
+  width: 100%;
+  padding-block: 1rem;
+  background-color: var(--container-color);
+  color: var(--text-color);
+}
+
+.search__input::placeholder {
+  color: var(--text-color);
+}
+
+/* Show search */
+.show-search {
+  opacity: 1;
+  pointer-events: initial;
+}
+
+.show-search .search__form {
+  transform: translateY(0);
+}
+
+
+/*=============== BREAKPOINTS ===============*/
+/* For medium devices */
+@media screen and (min-width: 576px) {
+  .search {
+    padding-top: 10rem;
+  }
+
+  .search__form {
+    max-width: 450px;
+    margin-inline: auto;
+  }
+
+  .search__close {
+    width: max-content;
+    top: 5rem;
+    left: 0;
+    right: 0;
+    margin-inline: auto;
+    font-size: 2rem;
+  }
+}
+
+/* For large devices */
+@media screen and (min-width: 1023px) {
+  .nav {
+    height: calc(var(--header-height) + 2rem);
+    column-gap: 3rem;
+  }
+  .nav__close, 
+  .nav__toggle {
+    display: none;
+  }
+  .nav__menu {
+    margin-left: auto;
+  }
+  .nav__list {
+    flex-direction: row;
+    column-gap: 3rem;
+  }
+
+  .login__form {
+    padding: 3rem 2rem 3.5rem;
+  }
+}
+
+@media screen and (min-width: 1150px) {
+  .container {
+    margin-inline: auto;
+  }
+}
+
+
+.carousel-margin-top {
+  margin-top: 100px; /* Ajuste conforme necessário */
+}
+
+
+
+
+.container-fluid.about {
+  background-color: #ffffff;
+}
+
+
+
+.container-fluid.about {
+  background-color: #ffffff;
+}
+
+
+.section-about-title {
+  font-size: 1.25rem;
+  color: #13357B;
+}
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.text-primary {
+  color: #13357B !important;
+}
+
+p {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #555;
+}
+
+@media (max-width: 900px) {
+  .image-container {
+      margin-bottom: 20px;
+  }
+
+  .text-container {
+      background: none;
+      padding: 20px;
+      text-align: center;
+  }
+
+  .section-about-title, h1, p {
+      text-align: center;
+  }
+}
+
+@media (max-width: 768px) {
+  h1 {
+      font-size: 2rem;
+  }
+
+  p {
+      font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .text-container {
+      padding: 15px;
+  }
+
+  h1 {
+      font-size: 1.75rem;
+  }
+
+  p {
+      font-size: 0.85rem;
+  }
+}
+
+.text-container {
+  text-align: justify;
+}
+
+.text-container h1 {
+  font-size: 2rem;
+}
+
+.text-container p {
+  font-size: 1rem;
+}
+
+
+
+.text-container {
+  text-align: center; /* Centralizar o título */
+}
+
+.mb-4 {
+  margin-bottom: 1rem; /* Margem inferior */
+}
+
+.text-primary {
+  color: #007bff; /* Cor primária, ajuste conforme necessário */
+}
+
+.flex {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center; /* Centralizar o conteúdo */
+  gap: 2.5rem; /* Espaçamento entre os itens */
+}
+
+.flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.gap-1 {
+  gap: 0.25rem; /* Espaçamento entre os itens */
+}
+
+.w-full {
+  width: 100%;
+}
+
+.max-w-\[326px\] {
+  max-width: 326px; /* Largura máxima para o container */
+}
+
+.p-4 {
+  padding: 1rem; /* Padding em todos os lados */
+}
+
+.border {
+  border-width: 1px; /* Espessura da borda */
+}
+
+.border-gray-200 {
+  border-color: #E5E7EB; /* Cor da borda */
+}
+
+.bg-gray-100 {
+  background-color: #F3F4F6; /* Cor de fundo do container */
+}
+
+.rounded-e-xl {
+  border-radius: 0 1.25rem 1.25rem 1.25rem; /* Canto arredondado para o container */
+}
+
+.dark\:bg-gray-700 {
+  background-color: #184B9A; /* Cor de fundo no modo escuro */
+}
+
+.items-center {
+  align-items: center; /* Alinhamento vertical */
+}
+
+.justify-center {
+  justify-content: center; /* Centralizar horizontalmente */
+}
+
+.space-x-2 {
+  margin-right: 0.5rem; /* Espaçamento horizontal entre elementos */
+}
+
+.mb-2 {
+  margin-bottom: 0.5rem; /* Margem inferior */
+}
+
+.text-sm {
+  font-size: 0.875rem; /* Tamanho do texto */
+}
+
+.font-semibold {
+  font-weight: 600; /* Peso da fonte */
+}
+
+.text-gray-900 {
+  color: #111827; /* Cor do texto */
+}
+
+.dark\:text-white {
+  color: #FFFFFF; /* Cor do texto no modo escuro */
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+}
+
+.relative {
+  position: relative;
+}
+
+
+.rounded-lg {
+  border-radius: 0.5rem; /* Canto arredondado para a imagem */
+}
+
+
+.special-bg {
+  background-color: #184B9A; /* Substitua por qualquer cor que desejar */
+}
+
+
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* Centraliza os cartões */
+  gap: 10px; /* Espaço entre os cartões */
+}
+
+.card {
+  width: 18rem;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px; /* Espaço inferior */
+}
+
+/* Para telas menores, como celulares */
+@media (max-width: 768px) {
+  .card-container {
+      flex-direction: column; /* Empilha os cartões verticalmente */
+      align-items: center; /* Centraliza os cartões */
+  }
+
+  .card {
+      width: 100%; /* Faz com que os cartões ocupem a largura total disponível */
+      max-width: 18rem; /* Limita a largura máxima dos cartões */
+  }
+}
+
+.card img {
+  border-radius: 15px;
+}
+
+
+
+
+
+
+.rodape {
+  background-color: white;
+  color: black;
+  height: auto;
+  width: 100%;
+  font-size: 14px;
+  font-family: helvetica;
+  text-align: center; /* Centraliza o texto dentro de cada elemento */
+}
+
+.rodape a {
+  text-decoration: none;
+  color: white;
+}
+
+.rodape p {
+  margin-bottom: 5px;
+}
+
+.rodape-div {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  margin: auto;
+  justify-content: center; /* Centraliza os elementos dentro do contêiner */
+  align-items: stretch;
+  padding: 60px 10px 40px 10px;
+}
+
+.rodape-div-1, .rodape-div-2, .rodape-div-3, .rodape-div-4 {
+  display: flex;
+  flex-direction: column; /* Alinha o conteúdo de cada coluna verticalmente */
+  align-items: center; /* Centraliza o conteúdo de cada coluna */
+  width: calc(100% / 4 - 20px);
+  padding: 10px;
+}
+
+.rodape span {
+  font-size: 20px;
+  color: black;
+}
+
+.rodape-direitos {
+  width: calc(100% - 20px);
+  background-color: #184b9a;
+  color: white;
+  padding: 10px;
+  margin: 0px;
+  text-align: center;
+}
+
+/*mobile*/
+@media (max-width: 768px) {
+  .rodape-div-1, .rodape-div-2, .rodape-div-3, .rodape-div-4 {
+    width: calc(50% - 20px);
+    padding: 10px;
+  }
+  .rodape-div {
+    padding: 60px 0px 40px 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .rodape-div-1, .rodape-div-2, .rodape-div-3, .rodape-div-4 {
+    width: 100%; /* Faz as colunas ocuparem 100% da largura em telas pequenas */
+    padding: 10px;
+  }
+}
+
+
+
+
+
+
+
+.text-container {
+  text-align: center;
+}
+
+.text-primary {
+  color: #007bff;
+}
+
+.timeline {
+  list-style: none;
+  padding: 0;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.timeline-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 250px;
+}
+
+.timeline-icon {
+  z-index: 1;
+  background-color: #F0F8FF;
+  color: #184B9A;
+  border-radius: 50%;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  margin-bottom: 10px;
+}
+
+.timeline-content {
+  background-color: #F0F8FF;
+  padding: 15px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.timeline-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: black;
+}
+
+.timeline-date {
+  font-size: 1rem;
+  color: #FA8072;
+  margin-bottom: 10px;
+}
+
+.timeline-description {
+  font-size: 1.2rem;
+  color: black;
+}
+
+
+
+
+
+
+
+
+
+
+.container {
+  max-width: 100%;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.mx-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.text-center {
+  text-align: justify;
+}
+
+.py-8 {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.max-w-sm {
+  max-width: 30rem; /* Largura máxima do cartão */
+}
+
+.w-full {
+  width: 100%;
+}
+
+/* Tornar o design responsivo */
+@media (min-width: 640px) {
+  .card {
+      max-width: 20rem; /* Ajusta o tamanho em telas maiores */
+  }
+}
+
+@media (min-width: 768px) {
+  .card {
+      max-width: 24rem; /* Ajusta o tamanho em tablets e telas maiores */
+  }
+}
+
+@media (min-width: 1024px) {
+  .card {
+      max-width: 28rem; /* Ajusta o tamanho em desktops */
+  }
+}
